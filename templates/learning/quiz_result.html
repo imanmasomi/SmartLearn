@@ -1,0 +1,47 @@
+
+{% extends "base.html" %}
+
+{% block title %}Quiz Result | SmartLearn{% endblock %}
+
+{% block content %}
+
+<section class="panel narrow">
+    <p class="eyebrow">Quiz Completed</p>
+
+    <h1>Your Result</h1>
+
+    <h2>{{ attempt.quiz.title }}</h2>
+
+    <div class="progress-section">
+        <h2>{{ percentage }}%</h2>
+
+        <div class="progress-bar">
+            <div
+                class="progress-fill"
+                style="width: {{ percentage }}%;"
+            ></div>
+        </div>
+    </div>
+
+    <p>
+        Correct answers:
+        <strong>{{ attempt.score }}</strong>
+        out of
+        <strong>{{ attempt.total_questions }}</strong>
+    </p>
+
+    <p class="muted">
+        Completed at:
+        {{ attempt.completed_at|date:"M d, Y - H:i" }}
+    </p>
+
+    <a class="button" href="{% url 'quiz_detail' attempt.quiz.id %}">
+        Back to Quiz
+    </a>
+
+    <a class="text-link" href="{% url 'quizzes' %}">
+        All Quizzes
+    </a>
+</section>
+
+{% endblock %}

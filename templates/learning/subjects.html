@@ -1,0 +1,62 @@
+
+{% extends "base.html" %}
+
+{% block title %}My Subjects | SmartLearn{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">Your Personal Library</p>
+        <h1>My Subjects</h1>
+    </div>
+
+    <a class="button" href="{% url 'subject_create' %}">
+        + Add Subject
+    </a>
+</div>
+
+<section class="panel">
+
+    {% for subject in subjects %}
+
+        <article class="subject-card">
+            <h2>{{ subject.name }}</h2>
+
+            <p class="muted">
+                {{ subject.description|default:"No description provided" }}
+            </p>
+
+            <span>{{ subject.topics.count }} Topics</span>
+
+            <div class="subject-actions">
+
+                <a class="button"
+                   href="{% url 'topic_list' subject.id %}">
+                    View Topics
+                </a>
+
+                <a class="button"
+                   href="{% url 'subject_edit' subject.id %}">
+                    Edit
+                </a>
+
+                <a class="text-link"
+                   href="{% url 'subject_delete' subject.id %}">
+                    Delete
+                </a>
+
+            </div>
+        </article>
+
+    {% empty %}
+
+        <p class="empty">
+            You haven't added any subjects yet.
+        </p>
+
+    {% endfor %}
+
+</section>
+
+{% endblock %}

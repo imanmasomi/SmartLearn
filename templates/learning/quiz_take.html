@@ -1,0 +1,50 @@
+```django
+{% extends "base.html" %}
+
+{% block title %}Take {{ quiz.title }} | SmartLearn{% endblock %}
+
+{% block content %}
+
+<section class="panel">
+    <p class="eyebrow">Knowledge Check</p>
+    <h1>{{ quiz.title }}</h1>
+    <p class="muted">{{ quiz.description }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% for question in questions %}
+            <article class="list-row">
+                <div class="quiz-question">
+                    <h3>
+                        {{ forloop.counter }}. {{ question.text }}
+                    </h3>
+
+                    <div class="quiz-choices">
+                        {% for choice in question.choices.all %}
+                            <label class="quiz-choice">
+                                <input
+                                    type="radio"
+                                    name="question_{{ question.id }}"
+                                    value="{{ choice.id }}"
+                                    required
+                                >
+                                <span>{{ choice.text }}</span>
+                            </label>
+                        {% empty %}
+                            <p class="muted">
+                                This question has no answer choices.
+                            </p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+
+        <button class="button" type="submit">
+            Submit Quiz
+        </button>
+    </form>
+</section>
+
+{% endblock %}

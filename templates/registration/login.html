@@ -1,0 +1,16 @@
+
+{% extends "base.html" %}
+{% block title %}Login | SmartLearn{% endblock %}
+{% block content %}
+<section class="panel narrow">
+  <h1>Login to SmartLearn</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="button" type="submit">Login</button>
+  </form>
+  <p class="muted">
+    To create a test user, use the createsuperuser command for now.
+  </p>
+</section>
+{% endblock %}

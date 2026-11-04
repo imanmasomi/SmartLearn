@@ -1,0 +1,30 @@
+
+{% extends "base.html" %}
+
+{% block title %}Delete Subject | SmartLearn{% endblock %}
+
+{% block content %}
+<section class="panel narrow">
+    <h1>Delete Subject</h1>
+
+    <p>
+        Are you sure you want to delete
+        <strong>{{ subject.name }}</strong>?
+    </p>
+
+    <p class="muted">
+        This action cannot be undone.
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button class="button" type="submit">
+            Yes, Delete
+        </button>
+
+        <a class="text-link" href="{% url 'subjects' %}">
+            Cancel
+        </a>
+    </form>
+</section>
+{% endblock %}

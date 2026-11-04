@@ -1,0 +1,56 @@
+
+{% extends "base.html" %}
+{% block title %}Dashboard | SmartLearn{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div>
+    <p class="eyebrow">Your Personal Learning Space</p>
+    <h1>Welcome back, {{ user.username }} 👋</h1>
+    <p class="muted">Manage your learning journey from one place.</p>
+  </div>
+  <a class="button" href="{% url 'subject_create' %}">+ Add Subject</a>
+</div>
+
+<div class="stats-grid">
+  <article class="stat-card">
+    <span>My Subjects</span>
+    <strong>{{ subjects.count }}</strong>
+  </article>
+  <article class="stat-card">
+    <span>Upcoming Study Sessions</span>
+    <strong>{{ sessions.count }}</strong>
+  </article>
+  <article class="stat-card">
+    <span>Quiz Attempts</span>
+    <strong>{{ attempts.count }}</strong>
+  </article>
+</div>
+
+<section class="panel">
+  <div class="section-heading">
+    <h2>My Subjects</h2>
+    <a href="{% url 'subjects' %}">View All</a>
+  </div>
+
+  {% for subject in subjects %}
+    <div class="list-row">
+      <strong>{{ subject.name }}</strong>
+      <span class="muted">{{ subject.topics.count }} Topics</span>
+    </div>
+  {% empty %}
+    <p class="empty">You haven't added any subjects yet. Add your first subject to get started.</p>
+  {% endfor %}
+</section>
+
+<section class="panel">
+  <h2>Upcoming Study Sessions</h2>
+  {% for session in sessions %}
+    <div class="list-row">
+      <strong>{{ session.title }}</strong>
+      <span class="muted">{{ session.scheduled_for|date:"Y/m/d H:i" }}</span>
+    </div>
+  {% empty %}
+    <p class="empty">No study sessions scheduled yet.</p>
+  {% endfor %}
+</section>
+{% endblock %}

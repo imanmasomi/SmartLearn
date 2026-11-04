@@ -1,0 +1,35 @@
+
+{% extends "base.html" %}
+
+{% block title %}Add Study Session | SmartLearn{% endblock %}
+
+{% block content %}
+
+<section class="panel narrow">
+
+    <p class="eyebrow">Learning Planner</p>
+
+    <h1>Add Study Session</h1>
+
+    <p class="muted">
+        Plan your next learning session.
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button class="button" type="submit">
+            Save Session
+        </button>
+
+        <a class="text-link" href="{% url 'sessions' %}">
+            Cancel
+        </a>
+
+    </form>
+
+</section>
+
+{% endblock %}

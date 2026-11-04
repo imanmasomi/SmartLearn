@@ -1,0 +1,91 @@
+
+{% extends "base.html" %}
+
+{% block title %}Study Sessions | SmartLearn{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+
+    <div>
+        <p class="eyebrow">Learning Planner</p>
+
+        <h1>Study Sessions</h1>
+
+        <p class="muted">
+            Organize your study schedule and track completed sessions.
+        </p>
+    </div>
+
+    <a class="button" href="{% url 'session_create' %}">
+        + Add Session
+    </a>
+
+</div>
+
+
+<section class="panel">
+
+    <h2>My Study Sessions</h2>
+
+    {% for session in sessions %}
+
+        <article class="list-row">
+
+            <div>
+
+                <strong>{{ session.title }}</strong>
+
+                <p class="muted">
+                    {{ session.subject.name }}
+                </p>
+
+                <p class="muted">
+                    {{ session.scheduled_for|date:"M d, Y - H:i" }}
+                </p>
+
+                <p class="muted">
+                    Duration: {{ session.duration_minutes }} minutes
+                </p>
+
+                {% if session.is_completed %}
+                    <span class="status completed">
+                        Completed
+                    </span>
+                {% else %}
+                    <span class="status pending">
+                        Upcoming
+                    </span>
+                {% endif %}
+
+            </div>
+
+            <form
+                method="post"
+                action="{% url 'session_toggle' session.id %}"
+            >
+                {% csrf_token %}
+
+                <button class="text-link" type="submit">
+                    {% if session.is_completed %}
+                        Mark as Incomplete
+                    {% else %}
+                        Mark as Completed
+                    {% endif %}
+                </button>
+
+            </form>
+
+        </article>
+
+    {% empty %}
+
+        <p class="empty">
+            No study sessions yet. Create your first session.
+        </p>
+
+    {% endfor %}
+
+</section>
+
+{% endblock %}

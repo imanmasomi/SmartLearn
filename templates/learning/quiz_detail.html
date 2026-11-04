@@ -1,0 +1,102 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ quiz.title }} | SmartLearn{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">Quiz Management</p>
+        <h1>{{ quiz.title }}</h1>
+        <p class="muted">{{ quiz.subject.name }}</p>
+        <p class="muted">{{ quiz.description }}</p>
+    </div>
+
+    <a class="button" href="{% url 'quiz_take' quiz.id %}">
+        Take Quiz
+    </a>
+</div>
+
+<section class="panel">
+    <h2>Add a Question</h2>
+
+    <form method="post"
+          action="{% url 'question_create' quiz.id %}">
+        {% csrf_token %}
+        {{ question_form.as_p }}
+
+        <button class="button" type="submit">
+            Add Question
+        </button>
+    </form>
+</section>
+
+<section class="panel">
+    <h2>Questions</h2>
+
+    {% for question in questions %}
+        <article class="list-row">
+            <div>
+                <strong>{{ forloop.counter }}. {{ question.text }}</strong>
+
+                <ul>
+                    {% for choice in question.choices.all %}
+                        <li>
+                            {{ choice.text }}
+
+                            {% if choice.is_correct %}
+                                <span class="status completed">
+                                    Correct Answer
+                                </span>
+                            {% endif %}
+                        </li>
+                    {% empty %}
+                        <li class="muted">No choices yet.</li>
+                    {% endfor %}
+                </ul>
+
+                <form method="post"
+                      action="{% url 'choice_create' question.id %}">
+                    {% csrf_token %}
+
+                    <p>
+                        <label for="choice-{{ question.id }}">
+                            New answer option
+                        </label>
+                        <input
+                            id="choice-{{ question.id }}"
+                            type="text"
+                            name="text"
+                            placeholder="Write an answer option"
+                            required
+                        >
+                    </p>
+
+                    <p>
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="is_correct"
+                                value="on"
+                            >
+                            This is the correct answer
+                        </label>
+                    </p>
+
+                    <button class="button" type="submit">
+                        Add Choice
+                    </button>
+                </form>
+            </div>
+        </article>
+    {% empty %}
+        <p class="empty">No questions added yet.</p>
+    {% endfor %}
+</section>
+
+<a class="text-link" href="{% url 'quizzes' %}">
+    Back to Quizzes
+</a>
+
+{% endblock %}
