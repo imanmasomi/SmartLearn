@@ -30,21 +30,25 @@ from .models import (
 def dashboard(request):
     subjects = Subject.objects.filter(owner=request.user)
 
-    sessions = StudySession.objects.filter(
+    all_sessions = StudySession.objects.filter(
         owner=request.user,
         is_completed=False
-    )[:5]
+    )
 
-    attempts = QuizAttempt.objects.filter(
+    all_attempts = QuizAttempt.objects.filter(
         user=request.user
-    ).select_related("quiz")[:5]
+    )
+
+    sessions = all_sessions[:5]
+    attempts = all_attempts.select_related("quiz")[:5]
 
     return render(request, "learning/dashboard.html", {
         "subjects": subjects,
         "sessions": sessions,
         "attempts": attempts,
+        "sessions_count": all_sessions.count(),
+        "attempts_count": all_attempts.count(),
     })
-
 
 # Subject views
 
