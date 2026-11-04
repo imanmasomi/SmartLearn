@@ -1,170 +1,34 @@
-# SmartLearn
-
-SmartLearn is a personal learning management and progress-tracking web application built with Django, Python, JavaScript, HTML, and CSS.
-
-The application helps users organize their learning activities, manage study subjects and topics, schedule study sessions, take quizzes, and track their learning progress.
-
-## Features
-
-### 1. User Authentication
-- Users can log in and log out.
-- Each user has a personal learning dashboard.
-- Users can manage their own learning subjects and study sessions.
-
-### 2. Subject Management
-- Create new subjects with a name and description.
-- View a list of personal subjects.
-- Edit and delete subjects.
-- Organize learning topics under each subject.
-
-### 3. Topic Management and Progress Tracking
-- Add topics to a subject.
-- Edit and delete topics.
-- Mark topics as completed or incomplete.
-- Automatically calculate learning progress based on completed topics.
-- Display progress as a percentage.
-
-### 4. Study Planner
-- Create study sessions associated with a subject.
-- Set a session title, date, time, and duration.
-- View scheduled study sessions.
-- Mark sessions as completed or incomplete.
-
-### 5. Quiz System
-- Create quizzes for individual subjects.
-- Add questions to each quiz.
-- Add multiple answer choices to each question.
-- Mark the correct answer when creating a choice.
-- Take quizzes by selecting answers.
-- Automatically evaluate submitted answers.
-- Calculate quiz scores and percentages.
-- Save quiz attempts with the user's score and completion date.
-- Display a result page after completing a quiz.
-
-## Distinctiveness and Complexity
-
-SmartLearn is different from a typical blog, social network, or e-commerce application because its main purpose is personal learning management and progress evaluation.
-
-The application combines several related features into one system. Users can organize subjects, divide them into smaller learning topics, schedule study sessions, and evaluate their knowledge through quizzes.
-
-The project uses a relational database structure with multiple connected Django models:
-
-- `Subject` stores each user's learning subjects.
-- `Topic` stores learning topics associated with subjects.
-- `StudySession` stores scheduled study activities.
-- `Quiz` stores quizzes associated with subjects.
-- `Question` stores questions belonging to quizzes.
-- `Choice` stores possible answers and identifies correct answers.
-- `QuizAttempt` stores quiz results for individual users.
-- `Review` represents a model for scheduling topic reviews.
-
-One important part of the application is the quiz evaluation system. When a user submits a quiz, Django checks the selected choices against the correct answers stored in the database, calculates the score, and saves the result as a quiz attempt.
-
-Another important feature is automatic progress calculation. The application calculates the percentage of completed topics for each subject instead of requiring users to update their progress manually.
-
-The project uses Django's server-side functionality for database operations, authentication, form validation, and application logic. HTML templates render the pages, CSS provides responsive styling, and JavaScript supports browser-side interactions.
-
-These connected features and database relationships make SmartLearn a complete learning management application rather than a collection of unrelated pages.
-
-## Technologies Used
-
-- Python
-- Django
-- SQLite
-- HTML5
-- CSS3
-- JavaScript
-
 ## Project Structure
 
-- `manage.py`: Django command-line utility.
-- `config/`: Main Django project configuration, settings, and URL routing.
-- `learning/models.py`: Database models.
-- `learning/forms.py`: Django forms for user input.
-- `learning/views.py`: Application logic and view functions.
-- `learning/urls.py`: URL patterns for the learning application.
-- `learning/admin.py`: Django administration configuration.
-- `learning/migrations/`: Database migration files.
-- `templates/`: HTML templates used by the application.
-- `templates/learning/`: Templates for subjects, topics, sessions, quizzes, and dashboard pages.
-- `templates/registration/`: Authentication templates.
-- `static/css/style.css`: Application styling and responsive layout.
-- `static/js/app.js`: Client-side JavaScript.
-- `requirements.txt`: Python dependencies.
-- `db.sqlite3`: SQLite development database.
+The project is organized into separate folders for configuration, application logic, database models, user interface templates, and static assets. This structure keeps the code organized and makes the application easier to maintain and extend.
 
-## Installation and Setup
+- `manage.py`: The main Django command-line utility. It is used to run the development server, execute database migrations, create administrator accounts, and run automated tests.
 
-Follow these steps to run SmartLearn locally.
+- `config/`: Contains the main configuration of the Django project.
+  - `settings.py`: Defines the project settings, including installed applications, middleware, database configuration, templates, static files, and security-related settings.
+  - `urls.py`: Defines the main URL routes and connects incoming requests to the appropriate application URLs.
+  - `asgi.py`: Provides the entry point for ASGI-compatible application servers.
+  - `wsgi.py`: Provides the entry point for WSGI-compatible application servers.
 
-1. Clone or download the project.
+- `learning/`: The main Django application. It contains the core functionality of SmartLearn, including subject management, topic tracking, study sessions, quizzes, and learning progress.
+  - `models.py`: Defines the database structure. The models represent subjects, topics, study sessions, quizzes, questions, answer choices, quiz attempts, and scheduled topic reviews. These models define how learning data is stored and how related records are connected.
+  - `views.py`: Contains the application logic. Views process user requests, retrieve or update database records, check permissions, calculate learning progress, and return the appropriate pages.
+  - `forms.py`: Defines Django forms used to collect and validate user input when creating or editing subjects, topics, study sessions, and quizzes.
+  - `urls.py`: Maps URLs belonging to the learning application to their corresponding views.
+  - `admin.py`: Registers and configures application models so they can be managed through Django's built-in administration interface.
+  - `apps.py`: Contains the configuration for the learning application.
+  - `tests.py`: Contains automated tests that check important application behavior, including user permissions, topic progress, completion actions, and quiz scoring.
+  - `migrations/`: Stores database migration files. These files record changes to the database structure as application models are created or updated.
 
-2. Navigate to the directory containing `manage.py`.
+- `templates/`: Contains the HTML files used to display the application's pages.
+  - `base.html`: Provides the shared page layout, navigation bar, and common structure used by other pages.
+  - `learning/`: Contains the pages for the dashboard, subjects, topics, study sessions, and quizzes. These templates display information received from the Django views.
+  - `registration/`: Contains authentication-related pages, including the login page.
 
-3. Create a virtual environment:
+- `static/`: Stores files used by the browser to control the appearance and interactive behavior of the application.
+  - `css/style.css`: Defines the visual design of SmartLearn, including colors, spacing, page layouts, buttons, forms, and responsive styling.
+  - `js/app.js`: Contains client-side JavaScript used for browser interactions and interface behavior.
 
-   ```bash
-   python -m venv venv
-   ```
+- `requirements.txt`: Lists the Python packages required to run the project. It allows developers to install the necessary dependencies using pip.
 
-4. Activate the virtual environment.
-
-   On macOS and Linux:
-
-   ```bash
-   source venv/bin/activate
-   ```
-
-   On Windows:
-
-   ```bash
-   venv\Scripts\activate
-   ```
-
-5. Install the dependencies:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-6. Apply database migrations:
-
-   ```bash
-   python manage.py migrate
-   ```
-
-7. Create an administrator account:
-
-   ```bash
-   python manage.py createsuperuser
-   ```
-
-8. Start the development server:
-
-   ```bash
-   python manage.py runserver
-   ```
-
-9. Open the following address in your browser:
-
-   `http://127.0.0.1:8000/`
-
-10. Log in and start organizing your learning activities.
-
-## Database
-
-SmartLearn uses SQLite during development. Django's ORM manages database operations and relationships between subjects, topics, study sessions, quizzes, questions, choices, and quiz attempts.
-
-## Future Improvements
-
-Possible future improvements include:
-
-- A dedicated spaced-repetition review interface.
-- More detailed learning statistics.
-- Quiz editing and deletion.
-- Improved study calendar visualization.
-- Additional quiz question types.
-
-## Security and Deployment
-
-This project is configured for local development. Before production deployment, the Django secret key, allowed hosts, debug settings, database configuration, and static-file settings should be adjusted for a secure production environment.
+- `README.md`: Provides project documentation, including an overview of SmartLearn, its main features, installation instructions, project structure, and technical information.
