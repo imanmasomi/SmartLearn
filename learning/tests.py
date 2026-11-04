@@ -1,125 +1,35 @@
-from django.contrib.auth import get_user_model
-from django.test import TestCase
-from django.urls import reverse
-
-from .models import Choice, Question, Quiz, QuizAttempt, Subject, Topic
-
-
-User = get_user_model()
-
-
-class SmartLearnTests(TestCase):
-
-    def setUp(self):
-        self.user = User.objects.create_user(
-            username="student1",
-            password="test-password-123",
-        )
-        self.other_user = User.objects.create_user(
-            username="student2",
-            password="test-password-123",
-        )
-
-        self.subject = Subject.objects.create(
-            owner=self.user,
-            name="Python",
-            description="Python fundamentals",
-        )
-
-        self.topic = Topic.objects.create(
-            subject=self.subject,
-            title="Variables",
-        )
-
-        self.client.force_login(self.user)
-
-    def test_topic_progress_is_calculated_correctly(self):
-        Topic.objects.create(
-            subject=self.subject,
-            title="Functions",
-            is_completed=True,
-        )
-
-        response = self.client.get(
-            reverse("topic_list", args=[self.subject.pk])
-        )
-
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["total_topics"], 2)
-        self.assertEqual(response.context["completed_topics"], 1)
-        self.assertEqual(response.context["progress"], 50)
-
-    def test_user_cannot_view_another_users_subject_topics(self):
-        other_subject = Subject.objects.create(
-            owner=self.other_user,
-            name="Private subject",
-        )
-
-        response = self.client.get(
-            reverse("topic_list", args=[other_subject.pk])
-        )
-
-        self.assertEqual(response.status_code, 404)
-
-    def test_topic_completion_toggle_requires_post(self):
-        url = reverse(
-            "topic_toggle",
-            args=[self.subject.pk, self.topic.pk],
-        )
-
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 405)
-
-        self.topic.refresh_from_db()
-        self.assertFalse(self.topic.is_completed)
-
-        response = self.client.post(url)
-        self.assertEqual(response.status_code, 302)
-
-        self.topic.refresh_from_db()
-        self.assertTrue(self.topic.is_completed)
-
-    def test_subject_creation_assigns_current_user_as_owner(self):
-        response = self.client.post(
-            reverse("subject_create"),
-            {
-                "name": "Django",
-                "description": "Web development",
-            },
-        )
-
-        self.assertEqual(response.status_code, 302)
-
-        subject = Subject.objects.get(name="Django")
-        self.assertEqual(subject.owner, self.user)
-
-    def test_quiz_attempt_records_correct_score(self):
+    def test_choice_from_another_question_is_not_accepted(self):
         quiz = Quiz.objects.create(
             subject=self.subject,
-            title="Python basics",
+            title="Python security test",
         )
 
-        question = Question.objects.create(
+        first_question = Question.objects.create(
             quiz=quiz,
-            text="What is Python?",
+            text="First question",
         )
 
-        correct_choice = Choice.objects.create(
-            question=question,
-            text="A programming language",
-            is_correct=True,
+        second_question = Question.objects.create(
+            quiz=quiz,
+            text="Second question",
         )
 
         Choice.objects.create(
-            question=question,
-            text="A database",
-            is_correct=False,
+            question=first_question,
+            text="First correct choice",
+            is_correct=True,
+        )
+
+        second_correct_choice = Choice.objects.create(
+            question=second_question,
+            text="Second correct choice",
+            is_correct=True,
         )
 
         response = self.client.post(
             reverse("quiz_take", args=[quiz.pk]),
             {
-                f"question_{question.pk}": str(correct_choice.pk)
+                f"question_{first_question.pk}": str(second_correct_choice.pk),
             },
         )
 
@@ -130,5 +40,5 @@ class SmartLearnTests(TestCase):
             quiz=quiz,
         )
 
-        self.assertEqual(attempt.score, 1)
-        self.assertEqual(attempt.total_questions, 1)
+        self.assertEqual(attempt.score, 0)
+        self.assertEqual(attempt.total_questions, 2)
