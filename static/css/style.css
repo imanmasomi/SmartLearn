@@ -686,3 +686,24 @@ label.quiz-choice input[type="radio"] {
     margin-bottom: 20px;
 }
 
+
+/* Force compact delete buttons */
+
+button.button-danger {
+    display: inline-block !important;
+    width: auto !important;
+    min-width: 0 !important;
+    padding: 6px 12px !important;
+    margin: 5px 0 !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    background: #dc3545 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 6px !important;
+}
+
+button.button-danger:hover {
+    background: #b02a37 !important;
+}
+
