@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Register | SmartLearn{% endblock %}
+
+{% block content %}
+<section class="panel narrow">
+    <h1>Create Your Account</h1>
+    <p class="muted">Join SmartLearn and organize your learning.</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}">Username</label>
+            {{ form.username }}
+            {{ form.username.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.password1.id_for_label }}">Password</label>
+            {{ form.password1 }}
+            {{ form.password1.errors }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+            {{ form.password2 }}
+            {{ form.password2.errors }}
+        </div>
+
+        <button class="button" type="submit">Create Account</button>
+    </form>
+
+    <p class="muted">
+        Already have an account?
+        <a href="{% url 'login' %}">Login</a>
+    </p>
+</section>
+{% endblock %}
