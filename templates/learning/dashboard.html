@@ -1,4 +1,3 @@
-cat > templates/learning/dashboard.html <<'EOF'
 {% extends "base.html" %}
 
 {% block title %}Dashboard | SmartLearn{% endblock %}
@@ -6,66 +5,82 @@ cat > templates/learning/dashboard.html <<'EOF'
 {% block content %}
 
 <section class="dashboard-header">
-    <div>
-        <p class="eyebrow">YOUR LEARNING SPACE</p>
+    <div class="welcome-content">
+        <span class="eyebrow">YOUR LEARNING SPACE</span>
         <h1>Welcome back, {{ user.username }}!</h1>
-        <p class="muted">Track your progress and continue learning.</p>
+        <p>Track your progress and continue learning.</p>
     </div>
 
-    <a href="{% url 'subjects' %}" class="button">Explore Subjects</a>
+    <a href="{% url 'subjects' %}" class="dashboard-button">
+        Explore Subjects
+    </a>
 </section>
 
 <section class="dashboard-stats">
 
     <div class="stat-card">
         <div class="stat-icon">📚</div>
-        <h3>My Subjects</h3>
-        <p>{{ subjects.count }}</p>
-        <span>Subjects you're learning</span>
+        <div class="stat-info">
+            <h3>My Subjects</h3>
+            <p>{{ subjects.count }}</p>
+            <span>Subjects you're learning</span>
+        </div>
     </div>
 
     <div class="stat-card">
         <div class="stat-icon">📅</div>
-        <h3>Upcoming Study Sessions</h3>
-        <p>{{ sessions_count }}</p>
-        <span>Your planned sessions</span>
+        <div class="stat-info">
+            <h3>Upcoming Sessions</h3>
+            <p>{{ sessions_count }}</p>
+            <span>Your planned sessions</span>
+        </div>
     </div>
 
     <div class="stat-card">
         <div class="stat-icon">🏆</div>
-        <h3>Quiz Attempts</h3>
-        <p>{{ attempts_count }}</p>
-        <span>Your learning activity</span>
+        <div class="stat-info">
+            <h3>Quiz Attempts</h3>
+            <p>{{ attempts_count }}</p>
+            <span>Your learning activity</span>
+        </div>
     </div>
 
 </section>
 
 <section class="dashboard-quick">
-    <h2>Quick Access</h2>
-    <p class="muted">Choose where you want to continue.</p>
+
+    <div class="section-heading">
+        <div>
+            <h2>Quick Access</h2>
+            <p>Choose where you want to continue.</p>
+        </div>
+    </div>
 
     <div class="quick-grid">
 
         <a href="{% url 'subjects' %}" class="quick-card">
-            <span>📖</span>
+            <div class="quick-icon">📖</div>
             <h3>My Subjects</h3>
             <p>View and manage your subjects.</p>
+            <span class="card-link">View Subjects →</span>
         </a>
 
         <a href="{% url 'sessions' %}" class="quick-card">
-            <span>🗓️</span>
+            <div class="quick-icon">🗓️</div>
             <h3>Study Sessions</h3>
             <p>Organize your study schedule.</p>
+            <span class="card-link">View Sessions →</span>
         </a>
 
         <a href="{% url 'quizzes' %}" class="quick-card">
-            <span>✏️</span>
+            <div class="quick-icon">✏️</div>
             <h3>My Quizzes</h3>
             <p>Practice and test your knowledge.</p>
+            <span class="card-link">View Quizzes →</span>
         </a>
 
     </div>
+
 </section>
 
 {% endblock %}
-EOF
