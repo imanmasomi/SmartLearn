@@ -466,169 +466,141 @@ label.quiz-choice input[type="radio"] {
     }
 }
 
-/* SMARTLEARN DASHBOARD */
+/* Dashboard */
 
 .dashboard-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 24px;
-    padding: 32px;
-    margin-bottom: 30px;
-    background: linear-gradient(135deg, #eef2ff, #f8faff);
-    border: 1px solid #e4e9ff;
-    border-radius: 20px;
+    gap: 20px;
+    padding: 24px;
+    margin-bottom: 28px;
+    background: #f5f7fb;
+    border: 1px solid #e5e8ef;
+    border-radius: 10px;
 }
 
 .dashboard-header h1 {
-    color: #26345a;
-    font-size: 30px;
+    color: #27345a;
+    font-size: 26px;
     margin: 10px 0;
 }
 
-.dashboard-header .eyebrow {
-    color: #6474c8;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-}
-
 .dashboard-header p {
-    color: #7d879d;
+    color: #777f8e;
+    font-size: 14px;
 }
 
-.dashboard-button,
-.dashboard-header .button {
-    display: inline-block;
-    padding: 13px 22px;
-    background: #5365d8;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 10px;
+.dashboard-header .eyebrow {
+    color: #5365a8;
+    font-size: 12px;
     font-weight: 600;
+}
+
+.dashboard-button {
+    display: inline-block;
+    padding: 10px 16px;
+    background: #5365a8;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
 }
 
 .dashboard-stats {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-    margin-bottom: 40px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 35px;
 }
 
 .dashboard-stats .stat-card {
-    padding: 25px;
-    background: #fff;
-    border: 1px solid #e9ecf3;
-    border-radius: 18px;
-    box-shadow: 0 6px 22px rgba(35, 48, 85, 0.06);
-    transition: 0.2s ease;
-}
-
-.dashboard-stats .stat-card:hover,
-.quick-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(35, 48, 85, 0.1);
+    padding: 20px;
+    background: white;
+    border: 1px solid #e5e8ef;
+    border-radius: 10px;
 }
 
 .stat-icon,
 .quick-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 52px;
-    height: 52px;
-    margin-bottom: 18px;
-    border-radius: 15px;
-    background: #eef1ff;
-    font-size: 25px;
+    font-size: 24px;
+    margin-bottom: 12px;
 }
 
+.stat-info h3,
 .dashboard-stats .stat-card h3 {
-    color: #7c8497;
+    color: #737b8c;
     font-size: 14px;
-    margin: 0;
+    margin: 0 0 10px;
 }
 
+.stat-info p,
 .dashboard-stats .stat-card p {
-    color: #26345a;
-    font-size: 34px;
-    font-weight: 800;
-    margin: 12px 0 5px;
+    color: #27345a;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 8px;
 }
 
+.stat-info span,
 .dashboard-stats .stat-card span {
-    color: #9299aa;
-    font-size: 13px;
+    color: #9299a8;
+    font-size: 12px;
 }
 
 .dashboard-quick {
-    margin-top: 35px;
+    margin-top: 30px;
 }
 
 .dashboard-quick h2 {
-    color: #26345a;
-    font-size: 23px;
+    color: #27345a;
+    font-size: 21px;
     margin-bottom: 8px;
 }
 
+.section-heading p,
 .dashboard-quick > p {
-    color: #9299aa;
+    color: #858c9a;
     font-size: 14px;
 }
 
 .quick-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-    margin-top: 22px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 20px;
 }
 
 .quick-card {
     display: block;
-    padding: 25px;
-    color: #26345a;
+    padding: 20px;
+    color: #27345a;
     text-decoration: none;
-    background: #fff;
-    border: 1px solid #e9ecf3;
-    border-radius: 18px;
-    box-shadow: 0 5px 18px rgba(35, 48, 85, 0.04);
-    transition: 0.2s ease;
+    background: white;
+    border: 1px solid #e5e8ef;
+    border-radius: 10px;
 }
 
 .quick-card h3 {
-    color: #26345a;
-    font-size: 17px;
-    margin: 0 0 10px;
+    font-size: 16px;
+    margin: 10px 0;
 }
 
 .quick-card p {
-    color: #8992a5;
+    color: #858c9a;
     font-size: 13px;
-    line-height: 1.7;
+    line-height: 1.6;
 }
 
 .card-link {
-    color: #5365d8;
+    color: #5365a8;
     font-size: 13px;
-    font-weight: 700;
-}
-
-@media (max-width: 900px) {
-    .dashboard-stats,
-    .quick-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
 }
 
 @media (max-width: 650px) {
     .dashboard-header {
         flex-direction: column;
         align-items: flex-start;
-        padding: 24px;
-    }
-
-    .dashboard-header h1 {
-        font-size: 24px;
     }
 
     .dashboard-stats,
@@ -636,4 +608,3 @@ label.quiz-choice input[type="radio"] {
         grid-template-columns: 1fr;
     }
 }
-
