@@ -208,3 +208,53 @@ Before deploying the application to a production environment, the following chan
 ## License
 
 This project was developed as a CS50 Web Programming with Python and JavaScript final project.
+
+## Detailed File Documentation
+
+### Django Configuration
+
+- `manage.py`: Provides the command-line interface for managing the Django project.
+- `config/settings.py`: Contains project settings, installed applications, database configuration, templates, static files, and security settings.
+- `config/urls.py`: Defines the main URL routes and connects the learning application and Django authentication routes.
+- `config/asgi.py`: Provides the ASGI application entry point.
+- `config/wsgi.py`: Provides the WSGI application entry point.
+- `config/__init__.py`: Identifies the configuration directory as a Python package.
+
+### Learning Application
+
+- `learning/models.py`: Defines the database models for subjects, topics, study sessions, quizzes, questions, choices, quiz attempts, and reviews.
+- `learning/views.py`: Implements the application logic, including authentication, dashboard display, learning management, quiz creation, quiz submission, and result calculation.
+- `learning/urls.py`: Maps application URLs to their corresponding views.
+- `learning/forms.py`: Defines forms used to collect and validate user input.
+- `learning/admin.py`: Configures application models for Django administration.
+- `learning/apps.py`: Contains the application configuration.
+- `learning/tests.py`: Contains automated tests for application functionality, data validation, and user access restrictions.
+- `learning/migrations/`: Contains database migration files used to create and update the database schema.
+
+### Frontend Files
+
+- `templates/base.html`: Provides the shared layout and navigation structure.
+- `templates/registration/`: Contains the registration and login pages.
+- `templates/learning/dashboard.html`: Displays the user's learning dashboard.
+- `templates/learning/subjects.html`: Displays the user's subjects.
+- `templates/learning/subject_form.html`: Provides the subject creation and editing form.
+- `templates/learning/subject_confirm_delete.html`: Displays the subject deletion confirmation page.
+- `templates/learning/topics.html`: Displays topics and learning progress.
+- `templates/learning/topic_edit.html`: Provides the topic editing interface.
+- `templates/learning/topic_confirm_delete.html`: Displays the topic deletion confirmation page.
+- `templates/learning/sessions.html`: Displays study sessions.
+- `templates/learning/session_form.html`: Provides the study session form.
+- `templates/learning/quizzes.html`: Displays available quizzes.
+- `templates/learning/quiz_form.html`: Provides the quiz creation and editing form.
+- `templates/learning/quiz_detail.html`: Displays quiz questions and answer choices and provides question and choice management.
+- `templates/learning/quiz_take.html`: Displays the quiz-taking interface.
+- `templates/learning/quiz_result.html`: Displays the result of a submitted quiz attempt.
+- `static/css/style.css`: Contains the visual styling and responsive layout rules.
+- `static/js/app.js`: Contains client-side JavaScript functionality.
+
+### Additional Files
+
+- `requirements.txt`: Lists the Python packages required to run the project.
+- `.gitignore`: Excludes local files, virtual environments, and database files from version control.
+- `README.md`: Documents the project's purpose, features, complexity, installation, structure, and testing.
+
