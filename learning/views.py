@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.views.decorators.http import require_POST
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 from .forms import (
     SubjectForm,
@@ -505,4 +507,23 @@ def quiz_result(request, pk):
     return render(request, "learning/quiz_result.html", {
         "attempt": attempt,
         "percentage": percentage,
+    })
+
+def register(request):
+    if request.user.is_authenticated:
+        return redirect("dashboard")
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Your account was created successfully!")
+            return redirect("dashboard")
+    else:
+        form = UserCreationForm()
+
+    return render(request, "registration/register.html", {
+        "form": form
     })
