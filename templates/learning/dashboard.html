@@ -1,16 +1,71 @@
-<div class="dashboard-stats">
+cat > templates/learning/dashboard.html <<'EOF'
+{% extends "base.html" %}
+
+{% block title %}Dashboard | SmartLearn{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-header">
+    <div>
+        <p class="eyebrow">YOUR LEARNING SPACE</p>
+        <h1>Welcome back, {{ user.username }}!</h1>
+        <p class="muted">Track your progress and continue learning.</p>
+    </div>
+
+    <a href="{% url 'subjects' %}" class="button">Explore Subjects</a>
+</section>
+
+<section class="dashboard-stats">
+
     <div class="stat-card">
+        <div class="stat-icon">📚</div>
         <h3>My Subjects</h3>
         <p>{{ subjects.count }}</p>
+        <span>Subjects you're learning</span>
     </div>
 
     <div class="stat-card">
+        <div class="stat-icon">📅</div>
         <h3>Upcoming Study Sessions</h3>
         <p>{{ sessions_count }}</p>
+        <span>Your planned sessions</span>
     </div>
 
     <div class="stat-card">
+        <div class="stat-icon">🏆</div>
         <h3>Quiz Attempts</h3>
         <p>{{ attempts_count }}</p>
+        <span>Your learning activity</span>
     </div>
-</div>
+
+</section>
+
+<section class="dashboard-quick">
+    <h2>Quick Access</h2>
+    <p class="muted">Choose where you want to continue.</p>
+
+    <div class="quick-grid">
+
+        <a href="{% url 'subjects' %}" class="quick-card">
+            <span>📖</span>
+            <h3>My Subjects</h3>
+            <p>View and manage your subjects.</p>
+        </a>
+
+        <a href="{% url 'sessions' %}" class="quick-card">
+            <span>🗓️</span>
+            <h3>Study Sessions</h3>
+            <p>Organize your study schedule.</p>
+        </a>
+
+        <a href="{% url 'quizzes' %}" class="quick-card">
+            <span>✏️</span>
+            <h3>My Quizzes</h3>
+            <p>Practice and test your knowledge.</p>
+        </a>
+
+    </div>
+</section>
+
+{% endblock %}
+EOF
