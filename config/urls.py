@@ -1,16 +1,13 @@
 
-from django.urls import path
-from . import views
 
+from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
-
-    # Registration
-    path(
-        "register/",
-        views.register,
-        name="register"
-    ),
+    path("admin/", admin.site.urls),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("", include("learning.urls")),
+]
 
     # Dashboard
     path(
