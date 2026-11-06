@@ -1,15 +1,15 @@
 
-
-
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from . import views
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("accounts/", include("django.contrib.auth.urls")),
-    path("", include("learning.urls")),
-]
 
+    # Registration
+    path(
+        "register/",
+        views.register,
+        name="register"
+    ),
 
     # Dashboard
     path(
@@ -135,5 +135,4 @@ urlpatterns = [
         views.quiz_result,
         name="quiz_result"
     ),
-
 ]
