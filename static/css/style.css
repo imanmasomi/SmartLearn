@@ -420,11 +420,24 @@ label.quiz-choice input[type="radio"] {
         padding: 14px 18px;
         align-items: flex-start;
         flex-direction: column;
+        gap: 12px;
     }
 
     .topbar nav {
-        gap: 16px;
-        flex-wrap: wrap;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        flex-wrap: nowrap;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .topbar nav a,
+    .topbar nav button {
+        flex-shrink: 0;
     }
 
     .container {
@@ -596,6 +609,8 @@ label.quiz-choice input[type="radio"] {
     color: #5365a8;
     font-size: 13px;
 }
+
+/* Dashboard Mobile */
 
 @media (max-width: 650px) {
     .dashboard-header {
