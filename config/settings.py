@@ -3,8 +3,14 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "development-only-change-before-deployment"
 DEBUG = True
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    ".app.github.dev",
+]
+
 CSRF_TRUSTED_ORIGINS = [
+    "https://*.app.github.dev",
     "https://localhost:8000",
 ]
 
