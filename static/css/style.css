@@ -623,3 +623,38 @@ label.quiz-choice input[type="radio"] {
         grid-template-columns: 1fr;
     }
 }
+/* Login and Register Form Spacing */
+
+.panel.narrow {
+    padding: 32px;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 9px;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 14px;
+}
+
+.panel.narrow form .button {
+    margin-top: 4px;
+    margin-bottom: 14px;
+}
+
+.panel.narrow form {
+    margin-top: 22px;
+}
+
+.panel.narrow .muted {
+    margin-top: 18px;
+    line-height: 1.8;
+}
