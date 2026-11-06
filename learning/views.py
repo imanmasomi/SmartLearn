@@ -527,3 +527,37 @@ def register(request):
     return render(request, "registration/register.html", {
         "form": form
     })
+
+
+# Quiz delete views
+
+@login_required
+@require_POST
+def question_delete(request, question_id):
+    question = get_object_or_404(
+        Question,
+        pk=question_id,
+        quiz__subject__owner=request.user
+    )
+
+    quiz_id = question.quiz.id
+    question.delete()
+
+    messages.success(request, "Question deleted successfully!")
+    return redirect("quiz_detail", pk=quiz_id)
+
+
+@login_required
+@require_POST
+def choice_delete(request, choice_id):
+    choice = get_object_or_404(
+        Choice,
+        pk=choice_id,
+        question__quiz__subject__owner=request.user
+    )
+
+    quiz_id = choice.question.quiz.id
+    choice.delete()
+
+    messages.success(request, "Answer choice deleted successfully!")
+    return redirect("quiz_detail", pk=quiz_id)

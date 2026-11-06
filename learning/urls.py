@@ -119,6 +119,9 @@ urlpatterns = [
         name="choice_create"
     ),
 
+    path("questions/<int:question_id>/delete/", views.question_delete, name="question_delete"),
+    path("choices/<int:choice_id>/delete/", views.choice_delete, name="choice_delete"),
+
     path(
         "quizzes/<int:pk>/take/",
         views.quiz_take,

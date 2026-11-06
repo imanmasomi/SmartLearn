@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% block title %}{{ quiz.title }} | SmartLearn{% endblock %}
@@ -21,14 +20,11 @@
 <section class="panel">
     <h2>Add a Question</h2>
 
-    <form method="post"
-          action="{% url 'question_create' quiz.id %}">
+    <form method="post" action="{% url 'question_create' quiz.id %}">
         {% csrf_token %}
         {{ question_form.as_p }}
 
-        <button class="button" type="submit">
-            Add Question
-        </button>
+        <button class="button" type="submit">Add Question</button>
     </form>
 </section>
 
@@ -40,30 +36,44 @@
             <div>
                 <strong>{{ forloop.counter }}. {{ question.text }}</strong>
 
+                <form method="post"
+                      action="{% url 'question_delete' question.id %}"
+                      onsubmit="return confirm('Delete this question and all its choices?');">
+                    {% csrf_token %}
+                    <button class="button button-danger" type="submit">
+                        Delete Question
+                    </button>
+                </form>
+
                 <ul>
                     {% for choice in question.choices.all %}
                         <li>
                             {{ choice.text }}
 
                             {% if choice.is_correct %}
-                                <span class="status completed">
-                                    Correct Answer
-                                </span>
+                                <span class="status completed">Correct Answer</span>
                             {% endif %}
+
+                            <form method="post"
+                                  action="{% url 'choice_delete' choice.id %}"
+                                  style="display:inline;"
+                                  onsubmit="return confirm('Delete this answer choice?');">
+                                {% csrf_token %}
+                                <button class="button button-danger" type="submit">
+                                    Delete
+                                </button>
+                            </form>
                         </li>
                     {% empty %}
                         <li class="muted">No choices yet.</li>
                     {% endfor %}
                 </ul>
 
-                <form method="post"
-                      action="{% url 'choice_create' question.id %}">
+                <form method="post" action="{% url 'choice_create' question.id %}">
                     {% csrf_token %}
 
                     <p>
-                        <label for="choice-{{ question.id }}">
-                            New answer option
-                        </label>
+                        <label for="choice-{{ question.id }}">New answer option</label>
                         <input
                             id="choice-{{ question.id }}"
                             type="text"
@@ -75,18 +85,12 @@
 
                     <p>
                         <label>
-                            <input
-                                type="checkbox"
-                                name="is_correct"
-                                value="on"
-                            >
+                            <input type="checkbox" name="is_correct" value="on">
                             This is the correct answer
                         </label>
                     </p>
 
-                    <button class="button" type="submit">
-                        Add Choice
-                    </button>
+                    <button class="button" type="submit">Add Choice</button>
                 </form>
             </div>
         </article>
@@ -95,8 +99,6 @@
     {% endfor %}
 </section>
 
-<a class="text-link" href="{% url 'quizzes' %}">
-    Back to Quizzes
-</a>
+<a class="text-link" href="{% url 'quizzes' %}">Back to Quizzes</a>
 
 {% endblock %}
