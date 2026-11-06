@@ -6,7 +6,7 @@ SmartLearn is a web-based learning management and progress tracking application 
 
 The application provides a personal dashboard where users can manage their learning activities and monitor their progress.
 
-## Complexity and Distinctiveness
+## Distinctiveness and Complexity
 
 SmartLearn is more than a simple CRUD application. It combines several connected features into one learning platform.
 
