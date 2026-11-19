@@ -1,260 +1,164 @@
 # SmartLearn
 
-## Overview
+SmartLearn is a web-based learning management application built with Django. It helps individual learners organize their subjects, divide their learning into manageable topics, plan study sessions, monitor their progress, and evaluate their knowledge through quizzes.
 
-SmartLearn is a web-based learning management and progress tracking application built with Django. It helps users organize their learning materials, manage study sessions, track topic completion, and evaluate their knowledge through quizzes.
-
-The application provides a personal dashboard where users can manage their learning activities and monitor their progress.
+The application provides a personal workspace for each registered user. After creating an account and logging in, a learner can manage their own learning materials and activities through a dashboard and a collection of dedicated pages. The main purpose of SmartLearn is to bring learning organization, progress tracking, study planning, and knowledge assessment together in one application.
 
 ## Distinctiveness and Complexity
 
-SmartLearn is more than a simple CRUD application. It combines several connected features into one learning platform.
+SmartLearn is designed as a personal learning management system rather than a simple collection of static pages or a basic CRUD application. Its main distinction is the way several related learning activities are connected through a common data model and a user-specific workspace.
 
-The project includes user authentication, subject and topic management, study session planning, quiz creation, quiz evaluation, and progress tracking.
+A learner begins by creating subjects. Each subject can contain multiple topics, allowing a large learning area to be divided into smaller and more manageable units. Topics can be marked as completed or incomplete. The application calculates the completion percentage for each subject from the number of completed topics and the total number of topics. This progress is displayed visually, giving users a straightforward way to understand how much of a subject they have completed.
 
-Its database structure uses relationships between models to organize subjects, topics, questions, choices, and quiz attempts. The application also ensures that users can access only their own learning data.
+The application also includes a study planning component. Users can create study sessions, associate each session with one of their subjects, select a scheduled date and time, and specify its duration. Sessions have completion status, so users can distinguish planned activities from completed ones. The dashboard brings together useful information from different parts of the application, including the number of subjects, incomplete study sessions, and recent quiz attempts.
 
-The quiz system evaluates submitted answers and records each user's results. Automated tests are included to verify important functionality and prevent certain invalid operations.
+Another important component is the quiz system. Users can create quizzes associated with their subjects, add questions, and create answer choices for each question. They can identify the correct answer while managing the quiz. When a learner takes a quiz, the application evaluates the submitted answers, calculates the score, records the attempt, and displays a result page with the percentage and the number of correct answers.
 
-## Features
+The project involves more than displaying and saving form data. Its backend contains related database models, ownership relationships, form validation, authentication, permission checks, database queries, and score calculation. For example, subjects and study sessions belong to individual users. Views filter records by the authenticated user, and related operations check ownership before allowing access. This prevents one user from accessing another user's private learning data through ordinary application routes.
 
-### User Authentication
-- Users can log in and access their personal learning dashboard.
-- Learning data is associated with the authenticated user.
+The quiz implementation also contains specific validation logic. When an answer is submitted, the application checks whether the selected choice belongs to the question being evaluated and whether that choice is marked as correct. This prevents a choice belonging to another question from being incorrectly counted as a correct answer. Quiz attempts are stored with the user's score, total question count, and completion timestamp, allowing the application to present recorded results.
 
-### Subject Management
-- Create, edit, view, and delete subjects.
-- Organize learning materials by subject.
+The dashboard, subject pages, topic progress display, study planner, quiz management pages, and quiz result page are connected parts of the same learning workflow. This combination of related features, user-specific data handling, relational database design, and server-side logic is what makes SmartLearn distinct from a simple task list or a basic content website.
 
-### Topic Management
-- Add topics to subjects.
-- Edit and delete topics.
-- Mark topics as completed or incomplete.
-- Track learning progress through topic completion.
+The frontend uses Django templates, custom CSS, and a small JavaScript file. The layout includes reusable navigation and message areas, consistent page components, forms, status indicators, progress bars, and responsive styling for smaller screens. The application is primarily implemented with Django and server-rendered HTML rather than relying on a separate frontend framework.
 
-### Study Session Management
-- Schedule study sessions.
-- Set a title, date, and duration for each session.
-- Mark sessions as completed or incomplete.
+## Main Features
 
-### Quiz System
-- Create quizzes for subjects.
-- Add questions and answer choices.
-- Identify correct answers.
-- Take quizzes and receive results.
-- Store quiz attempts and scores.
+- User registration, login, and logout.
+- A personal dashboard showing learning activity and summary counts.
+- Subject creation, listing, editing, and deletion.
+- Topic creation, editing, deletion, and completion tracking.
+- Automatic calculation and display of subject topic progress.
+- Study session creation and scheduling.
+- Study session completion tracking.
+- Quiz creation for a user's subjects.
+- Question and answer-choice management.
+- Correct-answer identification.
+- Quiz participation and automatic score calculation.
+- Recorded quiz attempts and result pages.
+- User-specific access control for learning data.
 
-### Dashboard
-- View subjects and learning progress.
-- See upcoming study sessions.
-- Review recent quiz attempts.
+## Technologies
 
-## Technologies Used
+- Python
+- Django 5.2
+- SQLite
+- HTML
+- CSS
+- JavaScript
+- Django Template Language
 
-- **Python:** Main programming language.
-- **Django:** Web framework.
-- **SQLite:** Database.
-- **HTML5:** Page structure.
-- **CSS3:** Styling and layout.
-- **JavaScript:** Basic client-side functionality.
-- **Git and GitHub:** Version control and project hosting.
+## Project Structure and File Documentation
 
-## Project Structure
+The following sections describe the files that make up the application and the purpose of each file.
 
-The project is organized into the following main directories and files:
+### Root Files
 
-- `manage.py`: Django project management utility.
-- `config/`: Main Django project configuration, including settings and URL configuration.
-- `learning/`: Main application containing models, views, forms, URLs, tests, and admin configuration.
-- `templates/`: HTML templates used to render application pages.
-- `static/`: Static files, including CSS and JavaScript.
-- `requirements.txt`: Python dependencies.
-- `README.md`: Project documentation.
+- `manage.py`: Django's command-line utility. It is used to run the development server, execute database migrations, run tests, and perform other Django management commands.
+- `requirements.txt`: Lists the Python dependency required by the project. It specifies Django with the version range `>=5.2,<6.0`.
+- `.gitignore`: Specifies files and directories that should not be tracked by Git, such as local development files and generated files.
+- `README.md`: Provides the project overview, feature descriptions, technical information, setup guidance, and documentation of the project files.
 
-## Installation and Setup
+### Configuration Package: `config/`
 
-Follow these steps to run SmartLearn locally.
+- `config/__init__.py`: Marks the configuration directory as a Python package.
+- `config/settings.py`: Contains the main Django configuration, including installed applications, middleware, template settings, database configuration, authentication settings, static-file settings, timezone, and allowed hosts.
+- `config/urls.py`: Defines the main URL configuration. It connects Django's administration interface, authentication URLs, and the URL patterns of the learning application.
+- `config/asgi.py`: Provides the ASGI application entry point for servers that support the Asynchronous Server Gateway Interface.
+- `config/wsgi.py`: Provides the WSGI application entry point for deployment through servers that support the Web Server Gateway Interface.
 
-### 1. Clone the repository
+### Learning Application: `learning/`
 
-```bash
-git clone https://github.com/imanmasomi/SmartLearn.git
-```
+- `learning/__init__.py`: Marks the learning directory as a Python package.
+- `learning/admin.py`: Registers the project's database models with Django's administration interface, including subjects, topics, study sessions, quizzes, questions, choices, quiz attempts, and reviews.
+- `learning/apps.py`: Defines the Django application configuration for the learning application.
+- `learning/models.py`: Defines the database structure and relationships. It contains the models for Subject, Topic, StudySession, Quiz, Question, Choice, QuizAttempt, and Review. These models represent the main learning data and connect users, subjects, topics, study sessions, questions, answer choices, and quiz results.
+- `learning/forms.py`: Defines Django forms used to create and edit subjects, topics, study sessions, quizzes, questions, and answer choices. It also filters subject selections in relevant forms so users can select their own subjects and validates study-session duration.
+- `learning/views.py`: Contains the main application logic. It handles the dashboard, registration, subject management, topic management, progress calculation, study sessions, quiz creation and management, quiz participation, answer evaluation, and result display. It also applies authentication and ownership checks to protect user-specific data.
+- `learning/urls.py`: Defines the URL patterns for the learning application. These routes connect browser requests to views for the dashboard, subjects, topics, study sessions, quizzes, questions, answer choices, and quiz results.
+- `learning/tests.py`: Contains automated tests for important application behavior. The tests cover topic progress calculation, user access restrictions, POST-only topic completion changes, subject ownership assignment, quiz score recording, and rejection of an answer choice belonging to a different question.
 
-### 2. Navigate to the project directory
+### Database Migrations: `learning/migrations/`
 
-```bash
-cd SmartLearn
-```
+- `learning/migrations/__init__.py`: Marks the migrations directory as a Python package.
+- `learning/migrations/0001_initial.py`: Defines the initial database migration. It creates the database tables and relationships for the learning application's models, including subjects, topics, study sessions, quizzes, questions, choices, quiz attempts, and reviews.
 
-If the Django project files are inside a nested directory, navigate to the directory containing `manage.py`.
+### Static Files: `static/`
 
-### 3. Create a virtual environment
+- `static/css/style.css`: Contains the application's custom visual styling. It defines typography, colors, navigation, buttons, panels, cards, forms, lists, progress bars, status indicators, dashboard components, and responsive layouts for smaller screens.
+- `static/js/app.js`: Contains the JavaScript entry point loaded by the base template. It listens for the DOM content-loaded event and logs a message indicating that SmartLearn is ready.
 
-```bash
-python -m venv venv
-```
+### Base Template: `templates/`
 
-### 4. Activate the virtual environment
+- `templates/base.html`: The shared layout used by the application's pages. It loads static CSS and JavaScript, provides the navigation bar, displays Django messages, and defines the content block extended by other templates. It also displays different navigation options depending on whether the user is authenticated.
 
-On Linux or macOS:
+### Learning Templates: `templates/learning/`
 
-```bash
-source venv/bin/activate
-```
+- `templates/learning/dashboard.html`: Displays the user's dashboard, including summary information about subjects, incomplete study sessions, quiz attempts, and links to the main application sections.
+- `templates/learning/subjects.html`: Displays the authenticated user's subjects, their descriptions, topic counts, and links for viewing topics, editing subjects, and deleting them.
+- `templates/learning/subject_form.html`: Provides the form page for creating a subject.
+- `templates/learning/subject_confirm_delete.html`: Displays a confirmation page before deleting a subject.
+- `templates/learning/topics.html`: Displays the topics belonging to a subject. It includes the progress percentage, completed-topic count, a form for adding topics, and controls for editing, deleting, and changing topic completion status.
+- `templates/learning/topic_edit.html`: Provides the form for editing an existing topic.
+- `templates/learning/topic_confirm_delete.html`: Displays a confirmation page before deleting a topic.
+- `templates/learning/sessions.html`: Lists the user's study sessions, including their subject, scheduled date and time, duration, completion status, and controls for changing that status.
+- `templates/learning/session_form.html`: Provides the form for creating a study session, including its subject, title, scheduled date and time, and duration.
+- `templates/learning/quizzes.html`: Displays the quizzes associated with the user's subjects and provides links to create and manage quizzes.
+- `templates/learning/quiz_form.html`: Provides the form for creating a quiz and associating it with one of the user's subjects.
+- `templates/learning/quiz_detail.html`: Provides the quiz management interface. It displays the quiz questions, allows new questions and answer choices to be added, identifies correct answers, and provides controls for deleting questions and choices.
+- `templates/learning/quiz_take.html`: Displays the questions and answer choices for a quiz. It provides the form through which a user submits answers.
+- `templates/learning/quiz_result.html`: Displays the result of a completed quiz attempt, including the percentage score, correct-answer count, total number of questions, and completion information.
 
-On Windows:
+### Authentication Templates: `templates/registration/`
 
-```bash
-venv\Scripts\activate
-```
+- `templates/registration/login.html`: Provides the login form and displays authentication errors and a link to account registration.
+- `templates/registration/register.html`: Provides the account registration form, including username, password, and password confirmation fields.
 
-### 5. Install dependencies
+## Database Design
 
-```bash
-pip install -r requirements.txt
-```
+SmartLearn uses Django's ORM and an SQLite database.
 
-### 6. Apply database migrations
+The main relationships are:
 
-```bash
-python manage.py migrate
-```
+- A user can own multiple subjects.
+- A subject can contain multiple topics.
+- A user can have multiple study sessions.
+- Each study session is associated with a subject.
+- A subject can contain multiple quizzes.
+- A quiz can contain multiple questions.
+- A question can contain multiple answer choices.
+- A user can have multiple quiz attempts.
+- Each quiz attempt is associated with a quiz and records its score and total number of questions.
+- A topic can be associated with review records in the database model.
 
-### 7. Create an administrator account
+The application uses Django model relationships and cascading deletion where configured, so related records are handled consistently when their parent records are deleted.
 
-```bash
-python manage.py createsuperuser
-```
+## Running the Project
 
-### 8. Run the development server
+1. Install Python and create or activate a virtual environment.
+2. Install the project dependency:
 
-```bash
-python manage.py runserver
-```
+   `pip install -r requirements.txt`
+3. Apply database migrations:
 
-Open the following address in your browser:
+   `python manage.py migrate`
+4. Start the development server:
 
-`http://127.0.0.1:8000/`
+   `python manage.py runserver`
+5. Open the local development address shown by Django in your browser.
 
-## Database Models
-
-SmartLearn uses Django models to store and organize application data.
-
-The main models include:
-
-- **Subject:** Stores subjects created by users, including their names and descriptions.
-- **Topic:** Represents individual learning topics belonging to a subject and stores their completion status.
-- **StudySession:** Stores scheduled study sessions, including their dates, durations, and completion status.
-- **Quiz:** Represents quizzes associated with subjects.
-- **Question:** Stores questions belonging to quizzes.
-- **Choice:** Stores answer choices for questions and identifies correct answers.
-- **QuizAttempt:** Records quiz attempts, scores, and completion dates for users.
-- **Review:** Stores scheduled review information for a topic, including its due date and completion status. The model is currently defined but does not yet have a dedicated user interface or review workflow.
-
-These models use relationships such as foreign keys to connect related records and maintain an organized database structure.
+Users can create an account through the registration page and then log in to access their personal learning workspace.
 
 ## Testing
 
-SmartLearn includes automated tests for important application functionality and security.
+The project includes automated Django tests for important functionality and data-protection behavior.
 
-The tests cover:
+Run the test suite with:
 
-- Correct calculation of topic completion progress.
-- Protection against users accessing another user's subjects and topics.
-- Validation of topic completion actions.
-- Assignment of newly created subjects to the currently authenticated user.
-- Correct evaluation and recording of quiz attempts.
-- Protection against accepting an answer choice belonging to another question.
+`python manage.py test`
 
-To run the automated tests, execute:
+The tests cover progress calculation, ownership restrictions, topic completion behavior, subject creation, quiz scoring, and answer validation.
 
-```bash
-python manage.py test
-```
+## Design Goal
 
-To check the project for common configuration problems, execute:
-
-```bash
-python manage.py check
-```
-
-All six automated tests pass successfully.
-
-## Future Improvements
-
-Possible future improvements include:
-
-- Implementing a spaced repetition review system with a dedicated review interface.
-- Adding options to edit and delete existing quizzes.
-- Providing more detailed learning statistics and progress charts.
-- Supporting additional question types.
-- Adding study session reminders and notifications.
-- Improving the user interface and overall user experience.
-
-## Security and Deployment
-
-SmartLearn is currently configured for local development using Django's development server and SQLite.
-
-Before deploying the application to a production environment, the following changes should be considered:
-
-- Set `DEBUG` to `False`.
-- Configure a secure `SECRET_KEY` using environment variables.
-- Configure allowed hosts.
-- Use an appropriate production database.
-- Configure static files for production.
-- Set up HTTPS and other production security settings.
-
-## License
-
-This project was developed as a CS50 Web Programming with Python and JavaScript final project.
-
-## Detailed File Documentation
-
-### Django Configuration
-
-- `manage.py`: Provides the command-line interface for managing the Django project.
-- `config/settings.py`: Contains project settings, installed applications, database configuration, templates, static files, and security settings.
-- `config/urls.py`: Defines the main URL routes and connects the learning application and Django authentication routes.
-- `config/asgi.py`: Provides the ASGI application entry point.
-- `config/wsgi.py`: Provides the WSGI application entry point.
-- `config/__init__.py`: Identifies the configuration directory as a Python package.
-
-### Learning Application
-
-- `learning/models.py`: Defines the database models for subjects, topics, study sessions, quizzes, questions, choices, quiz attempts, and reviews.
-- `learning/views.py`: Implements the application logic, including authentication, dashboard display, learning management, quiz creation, quiz submission, and result calculation.
-- `learning/urls.py`: Maps application URLs to their corresponding views.
-- `learning/forms.py`: Defines forms used to collect and validate user input.
-- `learning/admin.py`: Configures application models for Django administration.
-- `learning/apps.py`: Contains the application configuration.
-- `learning/tests.py`: Contains automated tests for application functionality, data validation, and user access restrictions.
-- `learning/migrations/`: Contains database migration files used to create and update the database schema.
-
-### Frontend Files
-
-- `templates/base.html`: Provides the shared layout and navigation structure.
-- `templates/registration/`: Contains the registration and login pages.
-- `templates/learning/dashboard.html`: Displays the user's learning dashboard.
-- `templates/learning/subjects.html`: Displays the user's subjects.
-- `templates/learning/subject_form.html`: Provides the subject creation and editing form.
-- `templates/learning/subject_confirm_delete.html`: Displays the subject deletion confirmation page.
-- `templates/learning/topics.html`: Displays topics and learning progress.
-- `templates/learning/topic_edit.html`: Provides the topic editing interface.
-- `templates/learning/topic_confirm_delete.html`: Displays the topic deletion confirmation page.
-- `templates/learning/sessions.html`: Displays study sessions.
-- `templates/learning/session_form.html`: Provides the study session form.
-- `templates/learning/quizzes.html`: Displays available quizzes.
-- `templates/learning/quiz_form.html`: Provides the quiz creation and editing form.
-- `templates/learning/quiz_detail.html`: Displays quiz questions and answer choices and provides question and choice management.
-- `templates/learning/quiz_take.html`: Displays the quiz-taking interface.
-- `templates/learning/quiz_result.html`: Displays the result of a submitted quiz attempt.
-- `static/css/style.css`: Contains the visual styling and responsive layout rules.
-- `static/js/app.js`: Contains client-side JavaScript functionality.
-
-### Additional Files
-
-- `requirements.txt`: Lists the Python packages required to run the project.
-- `.gitignore`: Excludes local files, virtual environments, and database files from version control.
-- `README.md`: Documents the project's purpose, features, complexity, installation, structure, and testing.
-
+SmartLearn aims to make independent learning easier to organize and evaluate. By connecting subjects, topics, study sessions, and quizzes in one application, it gives learners a structured way to plan their work, monitor progress, and check their understanding over time.
